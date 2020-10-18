@@ -1,7 +1,5 @@
 package com.css.cleo;
 
-import com.css.cleo.os.FeatureFactory;
-import com.css.cleo.os.OsFeature;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.SpeechResult;
 import edu.cmu.sphinx.api.StreamSpeechRecognizer;
