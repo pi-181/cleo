@@ -9,10 +9,13 @@ group 'com.css'
 version '1.0-SNAPSHOT'
 
 repositories {
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     mavenCentral()
 }
 
 dependencies {
+    compile group: 'edu.cmu.sphinx', name: 'sphinx4-core', version: '5prealpha-SNAPSHOT'
+    compile group: 'edu.cmu.sphinx', name: 'sphinx4-data', version: '5prealpha-SNAPSHOT'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 

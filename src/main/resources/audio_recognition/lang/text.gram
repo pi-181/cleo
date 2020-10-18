@@ -1,0 +1,6 @@
+#JSGF V1.0;
+
+grammar text;
+
+public <command> = <author> и <author> золотой теленок;
+<author> = илья ильф | евгений петров;
