@@ -15,6 +15,7 @@ repositories {
 
 dependencies {
     compile group: 'org.jetbrains', name: 'annotations', version: '20.1.0'
+    compile group: 'com.github.vatbub', name: 'mslinks', version: '1.0.6'
 
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-core', version: '5prealpha-SNAPSHOT'
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-data', version: '5prealpha-SNAPSHOT'
@@ -23,8 +24,8 @@ dependencies {
 }
 
 compileJava {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
+    sourceCompatibility = JavaVersion.VERSION_15
+    targetCompatibility = JavaVersion.VERSION_15
     options.encoding = "UTF-8"
     options.encoding = "UTF-8"
 }
