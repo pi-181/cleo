@@ -70,7 +70,7 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
             return;
 
         if (destroy && enabled)
-            throw new IllegalStateException("You can't state of destroyed recognizer.");
+            throw new IllegalStateException("You can't change state of destroyed recognizer.");
 
         this.enabled = enabled;
         if (enabled)
