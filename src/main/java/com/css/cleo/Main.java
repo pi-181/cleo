@@ -1,15 +1,13 @@
 package com.css.cleo;
 
+import com.css.cleo.voice.recognize.StreamVoiceRecognizer;
 import edu.cmu.sphinx.api.Configuration;
-import edu.cmu.sphinx.api.SpeechResult;
-import edu.cmu.sphinx.api.StreamSpeechRecognizer;
 
 import java.awt.*;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.util.function.Supplier;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
@@ -24,18 +22,21 @@ public class Main {
         config.setUseGrammar(true);
         config.setGrammarName("text");
 
-        final StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(config);
+        final Supplier<InputStream> supplier =
+                () -> Main.class.getResourceAsStream("/audio_recognition/test/audio1.wav");
 
-        final InputStream fileInputStream = Main.class.getResourceAsStream("/audio_recognition/test/audio1.wav");
-        recognizer.startRecognition(fileInputStream);
+        final StreamVoiceRecognizer simpleVoiceRecognizer = new StreamVoiceRecognizer(config, supplier.get(), (rec, res) -> {
+            final String hypothesis = res.getHypothesis();
+            System.out.format("Hypothesis: %s\n", hypothesis);
+            if (hypothesis.contains("теленок"))
+                rec.setEnabled(false);
+        });
 
-        SpeechResult result;
-        while ((result = recognizer.getResult()) != null)
-            System.out.format("Hypothesis: %s\n", result.getHypothesis());
-
-        recognizer.stopRecognition();
+        simpleVoiceRecognizer.setEnabled(true);
+        simpleVoiceRecognizer.waitForDone();
+        simpleVoiceRecognizer.setInputStream(supplier.get());
+        simpleVoiceRecognizer.setEnabled(true);
     }
-
 
     private static void setTrayIcon() {
         if (!SystemTray.isSupported())
