@@ -34,7 +34,6 @@ public class Main {
             System.out.format("Hypothesis: %s\n", result.getHypothesis());
 
         recognizer.stopRecognition();
-        Thread.sleep(1000 * 20);
     }
 
 
