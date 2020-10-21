@@ -17,6 +17,8 @@ dependencies {
     compile group: 'org.jetbrains', name: 'annotations', version: '20.1.0'
     compile group: 'com.github.vatbub', name: 'mslinks', version: '1.0.6'
 
+    compile 'com.github.kwhat:jnativehook:2.2-SNAPSHOT'
+
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-core', version: '5prealpha-SNAPSHOT'
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-data', version: '5prealpha-SNAPSHOT'
 

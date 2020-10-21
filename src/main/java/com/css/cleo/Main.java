@@ -1,6 +1,8 @@
 package com.css.cleo;
 
+import com.css.cleo.util.Keyboard;
 import com.css.cleo.voice.recognize.StreamVoiceRecognizer;
+import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import edu.cmu.sphinx.api.Configuration;
 
 import java.awt.*;
@@ -11,6 +13,9 @@ import java.util.function.Supplier;
 
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
+        Keyboard.init();
+        Keyboard.addDoubleReleasesHandler(500, NativeKeyEvent.VC_ALT, () -> System.out.println("double alt"));
+
         setTrayIcon();
 
         final Configuration config = new Configuration();
