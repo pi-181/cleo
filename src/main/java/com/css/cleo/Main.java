@@ -1,14 +1,13 @@
 package com.css.cleo;
 
+import com.css.cleo.ui.CleoTrayIcon;
 import com.css.cleo.util.Keyboard;
 import com.css.cleo.voice.recognize.StreamVoiceRecognizer;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import edu.cmu.sphinx.api.Configuration;
 
-import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URL;
 import java.util.function.Supplier;
 
 public class Main {
@@ -16,7 +15,9 @@ public class Main {
         Keyboard.init();
         Keyboard.addDoubleReleasesHandler(500, NativeKeyEvent.VC_ALT, () -> System.out.println("double alt"));
 
-        setTrayIcon();
+        final CleoTrayIcon tray = new CleoTrayIcon("/assets/icon/cleo-x256.png");
+        tray.addDoubleClickListener(e -> System.out.println("Click!"));
+        tray.addMenuItem("Exit", e -> System.exit(0));
 
         final Configuration config = new Configuration();
         final String resAudioRec = "resource:/audio_recognition";
@@ -43,27 +44,4 @@ public class Main {
         simpleVoiceRecognizer.setEnabled(true);
     }
 
-    private static void setTrayIcon() {
-        if (!SystemTray.isSupported())
-            return;
-
-        PopupMenu trayMenu = new PopupMenu();
-        MenuItem item = new MenuItem("Exit");
-        item.addActionListener(e -> System.exit(0));
-        trayMenu.add(item);
-
-        URL imageURL = Main.class.getResource("/assets/icon/cleo-x256.png");
-        Image icon = Toolkit.getDefaultToolkit().getImage(imageURL);
-        TrayIcon trayIcon = new TrayIcon(icon, "Cleo", trayMenu);
-        trayIcon.setImageAutoSize(true);
-
-        SystemTray tray = SystemTray.getSystemTray();
-        try {
-            tray.add(trayIcon);
-        } catch (AWTException e) {
-            e.printStackTrace();
-        }
-
-        trayIcon.displayMessage("Cleo", "Application started!", TrayIcon.MessageType.INFO);
-    }
 }
