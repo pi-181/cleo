@@ -5,7 +5,6 @@ import com.github.kwhat.jnativehook.NativeHookException;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyListener;
 
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 
 public class Keyboard {
