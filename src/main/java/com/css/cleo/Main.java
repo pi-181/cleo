@@ -8,6 +8,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URL;
 
 public class Main {
@@ -25,8 +26,7 @@ public class Main {
 
         final StreamSpeechRecognizer recognizer = new StreamSpeechRecognizer(config);
 
-        final File file = new File("L:/IdeaProjects/cleo/src/main/resources/audio_recognition/test/audio1.wav");
-        final FileInputStream fileInputStream = new FileInputStream(file);
+        final InputStream fileInputStream = Main.class.getResourceAsStream("/audio_recognition/test/audio1.wav");
         recognizer.startRecognition(fileInputStream);
 
         SpeechResult result;
