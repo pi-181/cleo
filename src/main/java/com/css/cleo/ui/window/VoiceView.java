@@ -1,6 +1,7 @@
 package com.css.cleo.ui.window;
 
 import com.css.cleo.ui.window.components.GradientJPanel;
+import com.css.cleo.ui.window.components.PlaceholderJTextField;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,6 +13,7 @@ import java.awt.event.MouseListener;
 public class VoiceView extends JFrame {
     private final JPanel rootPanel;
     private final GradientJPanel contentPanel;
+    private final PlaceholderJTextField textField;
 
     public VoiceView() {
         setUndecorated(true);
@@ -36,11 +38,27 @@ public class VoiceView extends JFrame {
         contentPanel.setBorder(BorderFactory.createEmptyBorder(10, 15, 10, 15));
         contentPanel.setColor1(new Color(177, 29, 119));
         contentPanel.setColor2(new Color(50, 136, 202));
+        contentPanel.setRounded(true);
 
-        final Dimension contentSize = new Dimension(Math.max(800, screenSize.width / 2), 100);
+        final Dimension contentSize = new Dimension(Math.max(800, screenSize.width / 2), 50);
         contentPanel.setMaximumSize(contentSize);
         contentPanel.setPreferredSize(contentSize);
         contentPanel.setMinimumSize(contentSize);
+
+        textField = new PlaceholderJTextField();
+        contentPanel.add(textField, new GridBagConstraints());
+        final Dimension fieldSize = new Dimension(contentSize.width - 20, contentSize.height - 20);
+        textField.setMaximumSize(fieldSize);
+        textField.setPreferredSize(fieldSize);
+        textField.setMinimumSize(fieldSize);
+        textField.setBorder(BorderFactory.createEmptyBorder());
+        textField.addKeyListener(eventListener);
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        textField.setFont(new Font("Default", Font.PLAIN, 20));
+        textField.setPlaceholder("What we will to do?");
+        textField.setDisabledTextColor(new Color(67, 67, 67));
+        textField.setEditable(false);
+        textField.setForeground(Color.BLACK);
 
         setAlwaysOnTop(true);
     }
@@ -52,6 +70,7 @@ public class VoiceView extends JFrame {
             setFocusable(true);
             setFocusableWindowState(true);
             requestFocus();
+            textField.requestFocus();
         }
     }
 
