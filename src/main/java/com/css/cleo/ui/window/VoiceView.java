@@ -2,6 +2,7 @@ package com.css.cleo.ui.window;
 
 import com.css.cleo.ui.window.components.GradientJPanel;
 import com.css.cleo.ui.window.components.PlaceholderJTextField;
+import edu.cmu.sphinx.api.SpeechResult;
 
 import javax.swing.*;
 import java.awt.*;
@@ -14,6 +15,8 @@ public class VoiceView extends JFrame {
     private final JPanel rootPanel;
     private final GradientJPanel contentPanel;
     private final PlaceholderJTextField textField;
+    private Runnable onShow;
+    private Runnable onHide;
 
     public VoiceView() {
         setUndecorated(true);
@@ -71,7 +74,22 @@ public class VoiceView extends JFrame {
             setFocusableWindowState(true);
             requestFocus();
             textField.requestFocus();
-        }
+            if (onShow != null)
+                onShow.run();
+        } else if (onHide != null)
+            onHide.run();
+    }
+
+    public void setSpeechResult(SpeechResult speechResult) {
+        textField.setText(speechResult.getHypothesis());
+    }
+
+    public void setOnShow(Runnable onShow) {
+        this.onShow = onShow;
+    }
+
+    public void setOnHide(Runnable onHide) {
+        this.onHide = onHide;
     }
 
     private class EventListener implements MouseListener, KeyListener {
