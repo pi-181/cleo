@@ -38,6 +38,7 @@ public class CleoApplication {
         } catch (IllegalArgumentException e) {
             JOptionPane.showMessageDialog(null,
                     "Can't detect microphone device!", "No input device", JOptionPane.ERROR_MESSAGE);
+            System.exit(1);
             throw new Error("No microphone detected");
         }
     }
