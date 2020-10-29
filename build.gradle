@@ -10,6 +10,7 @@ version '1.0-SNAPSHOT'
 
 repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
+    maven { url "https://jitpack.io" }
     mavenCentral()
 }
 
@@ -19,6 +20,7 @@ dependencies {
 
     compile 'com.github.kwhat:jnativehook:2.2-SNAPSHOT'
 
+    compile group: 'com.github.goxr3plus', name: 'JSFG-Grammar-Rules-Parser-Library-for-Sphinx4-5', version: 'V1.0.0'
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-core', version: '5prealpha-SNAPSHOT'
     compile group: 'edu.cmu.sphinx', name: 'sphinx4-data', version: '5prealpha-SNAPSHOT'
 

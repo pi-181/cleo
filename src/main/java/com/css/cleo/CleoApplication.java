@@ -12,6 +12,8 @@ import com.css.cleo.voice.recognize.VoiceRecognizer;
 import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.SpeechResult;
+import edu.cmu.sphinx.jsgf.JSGFGrammar;
+import edu.cmu.sphinx.jsgf.JSGFRuleGrammarManager;
 
 import javax.swing.*;
 import java.io.IOException;
