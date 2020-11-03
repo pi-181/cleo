@@ -22,16 +22,17 @@ public class CleoApplication {
     private final VoiceView voiceView = new VoiceView();
     private final OsFeature osFeature = FeatureFactory.getNativeFeature().orElseThrow();
     private final CleoTrayIcon tray = new CleoTrayIcon("/assets/icon/cleo-x256.png");
-    private final CommandDispatcher commandDispatcher = new CommandDispatcher(osFeature);
+    private final CommandDispatcher commandDispatcher;
     private final LanguageManager languageManager;
 
     public CleoApplication() {
         final Configuration config = new Configuration();
-
-        languageManager = new LanguageManager(new File(dataRoot, "languages"), config, this::onRecognize);
         config.setSampleRate(8000);
         config.setUseGrammar(true);
         config.setGrammarName("text");
+
+        languageManager = new LanguageManager(new File(dataRoot, "languages"), config, this::onRecognize);
+        commandDispatcher = new CommandDispatcher(osFeature, languageManager);
 
         languageManager.update(
                 System.out::println,
