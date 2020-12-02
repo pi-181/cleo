@@ -51,7 +51,7 @@ public class LanguageManager {
         final String outPrefix = "file:/";
         defaultConfig.setAcousticModelPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
         defaultConfig.setDictionaryPath(outPrefix + languageExplorer.getDictionary().getAbsolutePath());
-        defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammars().getAbsolutePath());
+        defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammarsDir().getAbsolutePath());
     }
 
     @NotNull
@@ -62,7 +62,7 @@ public class LanguageManager {
     public List<String> getRules(String... text) {
         try {
             return JSGFGrammarParser.getRulesContainingWords(
-                    new FileInputStream(languageExplorer.getGrammars()),
+                    new FileInputStream(languageExplorer.getGrammarsDir()),
                     Arrays.asList(text),
                     true
             );

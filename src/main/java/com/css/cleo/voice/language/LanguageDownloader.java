@@ -49,7 +49,7 @@ public class LanguageDownloader {
 
     private void install(File dictionaryZip, File grammarZip, File accentModelZip, Runnable onDone) {
         FileUtil.unzip(dictionaryZip, languageExplorer.getDictionary().getParentFile());
-        FileUtil.unzip(grammarZip, languageExplorer.getGrammars().getParentFile());
+        FileUtil.unzip(grammarZip, languageExplorer.getGrammarsDir());
         FileUtil.unzip(accentModelZip, languageExplorer.getAcousticModelDir());
         onDone.run();
     }

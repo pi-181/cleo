@@ -14,7 +14,7 @@ public class LanguageExplorer {
     public boolean isReady() {
         File acousticModelDir = getAcousticModelDir();
         return getDictionary().exists()
-                && getGrammars().exists()
+                && getGrammarsDir().exists()
                 && acousticModelDir.exists()
                 && acousticModelDir.listFiles().length != 0;
     }
@@ -27,8 +27,8 @@ public class LanguageExplorer {
         return getFile("hmm");
     }
 
-    public File getGrammars() {
-        return getFile("text.gram");
+    public File getGrammarsDir() {
+        return getFile("grammars");
     }
 
     private File getFile(String fileName) {
