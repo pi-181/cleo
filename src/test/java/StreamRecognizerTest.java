@@ -6,9 +6,8 @@ import main.java.com.goxr3plus.jsfggrammarparser.parser.JSGFGrammarParser;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class StreamRecognizerTest {
     @Test
@@ -38,15 +37,11 @@ public class StreamRecognizerTest {
         SpeechResult speechResult = speechResults[0];
         Assert.assertEquals(speechResult.getHypothesis(), "илья ильф и евгений петров золотой теленок");
 
-        System.out.println("Lattice");
-        List<String> words = speechResult.getWords().stream().map(w -> w.getWord().getSpelling()).collect(Collectors.toList());
         List<String> rulesContainingWords = JSGFGrammarParser.getRulesContainingWords(
                 getClass().getResourceAsStream("/test/text.gram"),
-                Arrays.asList("илья ильф"),
+                Collections.singletonList("илья ильф"),
                 true
         );
-
-        System.out.println(words);
-        System.out.println(rulesContainingWords);
+        Assert.assertTrue(rulesContainingWords.contains("author"));
     }
 }
