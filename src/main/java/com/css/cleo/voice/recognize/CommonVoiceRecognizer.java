@@ -7,6 +7,12 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
 
+/**
+ * Abstraction that hides framework
+ * specific and adds some external functionality.
+ *
+ * @param <T> Voice Recognizer
+ */
 public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> implements VoiceRecognizer {
     protected final ReentrantLock lock = new ReentrantLock();
     protected final Condition initCondition = lock.newCondition();
@@ -19,6 +25,12 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
     protected boolean enabled = false;
     protected boolean destroy = false;
 
+    /**
+     * Constructs VoiceRecognizer object.
+     *
+     * @param resultCallback   function interface that will handle result of recognizing
+     * @param speechRecognizer object that will recognize voice
+     */
     public CommonVoiceRecognizer(BiConsumer<VoiceRecognizer, SpeechResult> resultCallback,
                                  T speechRecognizer) {
         this.resultCallback = resultCallback;
@@ -58,6 +70,11 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
         thread.start();
     }
 
+    /**
+     * Changes state of VoiceRecognizer.
+     *
+     * @param enabled true should start listening, to stop if will false
+     */
     @Override
     public void setEnabled(boolean enabled) {
         if (!initialized) {
@@ -83,32 +100,54 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
         lock.unlock();
     }
 
+    /**
+     * @return current state of the recognizer
+     */
     @Override
     public boolean isEnabled() {
         return enabled;
     }
 
+    /**
+     * @return current handler of result
+     */
     @Override
     public BiConsumer<VoiceRecognizer, SpeechResult> getResultCallback() {
         return resultCallback;
     }
 
+    /**
+     * Changes handler of voice recognizing result.
+     *
+     * @param resultCallback callback that will handle results
+     */
     @Override
     public void setResultCallback(BiConsumer<VoiceRecognizer, SpeechResult> resultCallback) {
         this.resultCallback = resultCallback;
     }
 
+    /**
+     * Should be called in the end of usage,
+     * stops recognizing end free memory if need.
+     */
     @Override
     public void destroy() {
         setEnabled(false);
         this.destroy = true;
     }
 
+    /**
+     * @return current status of recognizer, is destroyed or not
+     */
     @Override
     public boolean isDestroyed() {
         return destroy;
     }
 
+    /**
+     * Uninterruptibly blocks current thread until
+     * recognizing voice will not be finished.
+     */
     @Override
     public void waitForDoneUninterruptibly() {
         lock.lock();
@@ -121,6 +160,12 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
         lock.unlock();
     }
 
+    /**
+     * Blocks current thread until
+     * recognizing voice will not be finished.
+     *
+     * @throws InterruptedException when interrupted
+     */
     @Override
     public void waitForDone() throws InterruptedException {
         lock.lock();
@@ -133,8 +178,14 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
         lock.unlock();
     }
 
+    /**
+     * Methods that starts voice recognizing
+     */
     protected abstract void startRecognition();
 
+    /**
+     * Methods that stops voice recognizing
+     */
     protected abstract void stopRecognition();
 
 }
