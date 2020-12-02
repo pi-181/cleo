@@ -51,7 +51,7 @@ public class LanguageManager {
         final String outPrefix = "file:/";
         defaultConfig.setAcousticModelPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
         defaultConfig.setDictionaryPath(outPrefix + languageExplorer.getDictionary().getAbsolutePath());
-        defaultConfig.setGrammarPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
+        defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammars().getAbsolutePath());
     }
 
     @NotNull
