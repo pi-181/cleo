@@ -1,19 +1,23 @@
+// Блок для підключення плагінів до системи збірки
+// В якому описуються ідентифікатори потрібних плагінів
+// та версія, якщо потрібно
 plugins {
     id 'java'
     id 'application'
 }
-
+// Ім'я головного класу проекту
 mainClassName = 'com.css.cleo.Main'
-
+//оголошення групи та версії проекту
 group 'com.css'
 version '1.0-SNAPSHOT'
-
+// Блок в якому описують репозиторії, з яких будуть завантажуватись
+// залежності, зазвичай це 2 репозиторії
 repositories {
     maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
     maven { url "https://jitpack.io" }
     mavenCentral()
 }
-
+//Встановлення залежностей проекту
 dependencies {
     compile group: 'org.jetbrains', name: 'annotations', version: '20.1.0'
     compile group: 'com.github.vatbub', name: 'mslinks', version: '1.0.6'
@@ -26,7 +30,7 @@ dependencies {
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
-
+//Налаштування компіляції
 compileJava {
     sourceCompatibility = JavaVersion.VERSION_15
     targetCompatibility = JavaVersion.VERSION_15
