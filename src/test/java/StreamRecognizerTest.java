@@ -9,7 +9,17 @@ import org.junit.Test;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Test for voice recognition module
+ */
 public class StreamRecognizerTest {
+    /**
+     * Validates recognizer with simple
+     * example of jsgf grammar and prepared audio.
+     *
+     * @throws Exception some exception that can be
+     *                   dropped during load configurations and files
+     */
     @Test
     public void testRecognizer() throws Exception {
         final Configuration config = new Configuration();
