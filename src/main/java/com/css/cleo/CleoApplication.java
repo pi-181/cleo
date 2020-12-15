@@ -1,8 +1,8 @@
 package com.css.cleo;
 
 import com.css.cleo.command.CommandDispatcher;
+import com.css.cleo.os.CommonFeatureFactory;
 import com.css.cleo.os.FeatureFactory;
-import com.css.cleo.os.OsFeature;
 import com.css.cleo.ui.CleoTrayIcon;
 import com.css.cleo.ui.window.VoiceView;
 import com.css.cleo.util.Keyboard;
@@ -20,7 +20,7 @@ public class CleoApplication {
     private final File dataRoot = new File(System.getenv("APPDATA"), "Cleo");
 
     private final VoiceView voiceView = new VoiceView();
-    private final FeatureFactory osFeature = new FeatureFactory();
+    private final FeatureFactory featureFactory = new CommonFeatureFactory();
     private final CleoTrayIcon tray = new CleoTrayIcon("/assets/icon/cleo-x256.png");
     private final CommandDispatcher commandDispatcher;
     private final LanguageManager languageManager;
@@ -32,7 +32,7 @@ public class CleoApplication {
         config.setGrammarName("text");
 
         languageManager = new LanguageManager(new File(dataRoot, "languages"), config, this::onRecognize);
-        commandDispatcher = new CommandDispatcher(osFeature.getNativeFeature().orElseThrow(), languageManager);
+        commandDispatcher = new CommandDispatcher(featureFactory.getNativeFeature().orElseThrow(), languageManager);
 
         languageManager.update(
                 System.out::println,
