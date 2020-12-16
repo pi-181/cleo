@@ -65,10 +65,10 @@ public class CleoApplication {
     }
 
     public void start() {
-        Keyboard.addDoubleReleasesHandler(500, NativeKeyEvent.VC_ALT, () -> voiceView.setVisible(true));
+        Keyboard.addDoubleReleasesHandler(500, NativeKeyEvent.VC_ALT, () -> voiceView.restore(true));
 
-        tray.addDoubleClickListener(e -> voiceView.setVisible(true));
-        tray.addMenuItem("Record", e -> voiceView.setVisible(true));
+        tray.addDoubleClickListener(e -> voiceView.restore(true));
+        tray.addMenuItem("Record", e -> voiceView.restore(true));
         tray.addMenuItem("Settings", e -> System.out.println("not done yet"));
         tray.addMenuItem("Exit", e -> System.exit(0));
 
