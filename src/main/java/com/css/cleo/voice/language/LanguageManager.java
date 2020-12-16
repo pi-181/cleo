@@ -12,6 +12,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.function.BiConsumer;
 import java.util.function.Consumer;
@@ -26,6 +27,7 @@ public class LanguageManager {
     private final LanguageExplorer languageExplorer;
     private final LanguageDownloader languageDownloader;
     private LiveVoiceRecognizer voiceRecognizer;
+    private List<String> allRules;
 
     public LanguageManager(File languageDirectory,
                            Configuration defaultConfig,
@@ -52,6 +54,8 @@ public class LanguageManager {
         defaultConfig.setAcousticModelPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
         defaultConfig.setDictionaryPath(outPrefix + languageExplorer.getDictionary().getAbsolutePath());
         defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammarsDir().getAbsolutePath());
+
+        allRules = JSGFGrammarParser.getAllGrammarRules(languageExplorer.getRootGrammarFile(), true);
     }
 
     @NotNull
@@ -61,11 +65,16 @@ public class LanguageManager {
 
     public List<String> getRules(String... text) {
         try {
-            return JSGFGrammarParser.getRulesContainingWords(
+            List<String> list = JSGFGrammarParser.getRulesContainingWords(
                     new FileInputStream(languageExplorer.getRootGrammarFile()),
                     Arrays.asList(text),
                     true
             );
+
+            if (list.size() == allRules.size())
+                return Collections.emptyList();
+
+            return list;
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
