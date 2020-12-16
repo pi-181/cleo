@@ -1,0 +1,17 @@
+#JSGF V1.0;
+
+grammar text;
+
+public <command> = <open_browser> | <volume_increase>  | <volume_decrease> | <volume_disable> |
+                   <power_hibernate> | <power_restart> | <power_shutdown>
+                    ;
+
+<power_shutdown> = SHUTDOWN;
+<power_restart> = REBOOT;
+<power_hibernate> = SLEEP;
+
+<volume_increase> = INCREASE VOLUME | ADD VOLUME | LOUDER;
+<volume_decrease> = DECREASE VOLUME | TAKE VOLUME | QUIETER;
+<volume_disable> = DISABLE SOUND;
+
+<open_browser> = OPEN BROWSER;

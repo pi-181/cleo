@@ -1,0 +1,16 @@
+#JSGF V1.0;
+
+grammar text;
+
+public <command> = <open_browser>
+                    ;
+
+<power_shutdown> = "выключи" "компьютер" | "заверши" "сеанс";
+<power_restart> = "перезагрузи" "компьютер";
+<power_hibernate> = "сон" | "перейди" "в" "режим" "сна";
+
+<volume_increase> = "увелич" "громкость" | "добавь" "громкость" | "громче";
+<volume_decrease> = "уменьши" "громкость" | "убери" "громкость" | "тише";
+<volume_disable> = "выключи" "звук";
+
+<open_browser> = "открой" "браузер";

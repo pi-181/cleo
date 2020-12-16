@@ -42,7 +42,12 @@ public class LanguageManager {
         this.languageExplorer = new LanguageExplorer(languageDirectory, languageConfiguration);
         this.languageDownloader = new LanguageDownloader(languageExplorer);
 
-        setLanguage(languageConfiguration.getLanguage());
+        final String resPrefix = "resource:/";
+        defaultConfig.setAcousticModelPath(resPrefix + "audio_recognition/hmm/en/");
+        defaultConfig.setDictionaryPath(resPrefix + "audio_recognition/dictionary/en.dic");
+        defaultConfig.setGrammarPath(resPrefix + "audio_recognition/lang/en/");
+        defaultConfig.setLanguageModelPath(resPrefix + "audio_recognition/lm/en.lm");
+//        setLanguage(languageConfiguration.getLanguage());
     }
 
     public void setLanguage(Language language) {

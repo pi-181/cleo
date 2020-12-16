@@ -77,6 +77,10 @@ public class CleoApplication {
     }
 
     private void onRecognize(VoiceRecognizer recognizer, SpeechResult result) {
+        System.out.println(result.getHypothesis());
+        System.out.println(result.getResult());
+        if (true)
+            return;
         voiceView.setSpeechResult(result);
         voiceView.setSuccess(commandDispatcher.dispatch(result));
     }
