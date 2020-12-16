@@ -78,8 +78,13 @@ public class CleoApplication {
 
     private void onRecognize(VoiceRecognizer recognizer, SpeechResult result) {
         System.out.println(result.getHypothesis() + " - " + result.getResult());
-        voiceView.setSpeechResult(result);
-        voiceView.setSuccess(commandDispatcher.dispatch(result));
+        try {
+            voiceView.setVisible(false);
+            voiceView.setSpeechResult(result);
+            voiceView.setSuccess(commandDispatcher.dispatch(result));
+        } finally {
+            voiceView.setVisible(true);
+        }
     }
 
 }
