@@ -14,6 +14,8 @@ import edu.cmu.sphinx.api.SpeechResult;
 
 import javax.swing.*;
 import java.io.File;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.function.Consumer;
 
 public class CleoApplication {
@@ -78,13 +80,18 @@ public class CleoApplication {
 
     private void onRecognize(VoiceRecognizer recognizer, SpeechResult result) {
         System.out.println(result.getHypothesis() + " - " + result.getResult());
+        voiceView.setSpeechResult(result);
+        boolean success = commandDispatcher.dispatch(result);
+        voiceView.setSuccess(success);
+        if (!success)
+            return;
+
         try {
-            voiceView.setVisible(false);
-            voiceView.setSpeechResult(result);
-            voiceView.setSuccess(commandDispatcher.dispatch(result));
-        } finally {
-            voiceView.setVisible(true);
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
+        voiceView.restore(false);
     }
 
 }
