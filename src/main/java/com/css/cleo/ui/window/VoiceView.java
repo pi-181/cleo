@@ -75,8 +75,7 @@ public class VoiceView extends JFrame {
         }
     }
 
-    @Override
-    public void setVisible(boolean visible) {
+    public void restore(boolean visible) {
         super.setVisible(visible);
         if (visible) {
             textField.setForeground(Color.BLACK);
@@ -112,7 +111,7 @@ public class VoiceView extends JFrame {
         @Override
         public void mouseClicked(MouseEvent e) {
             if (!contentPanel.getBounds().contains(e.getX(), e.getY()))
-                setVisible(false);
+                restore(false);
         }
 
         @Override
@@ -142,7 +141,7 @@ public class VoiceView extends JFrame {
         @Override
         public void keyPressed(KeyEvent e) {
             if (e.getKeyCode() == KeyEvent.VK_ESCAPE)
-                setVisible(false);
+                restore(false);
         }
 
         @Override
