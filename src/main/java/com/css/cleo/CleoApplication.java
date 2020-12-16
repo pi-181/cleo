@@ -27,7 +27,7 @@ public class CleoApplication {
 
     public CleoApplication() {
         final Configuration config = new Configuration();
-        config.setSampleRate(8000);
+        config.setSampleRate(24000);
         config.setUseGrammar(true);
         config.setGrammarName("text");
 
