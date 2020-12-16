@@ -31,6 +31,10 @@ public class LanguageExplorer {
         return getFile("grammars");
     }
 
+    public File getRootGrammarFile() {
+        return new File(getGrammarsDir(), "text.gram");
+    }
+
     private File getFile(String fileName) {
         Language language = languageConfiguration.getLanguage();
         return new File(new File(languageDirectory, language.getName()), fileName);

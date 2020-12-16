@@ -62,7 +62,7 @@ public class LanguageManager {
     public List<String> getRules(String... text) {
         try {
             return JSGFGrammarParser.getRulesContainingWords(
-                    new FileInputStream(languageExplorer.getGrammarsDir()),
+                    new FileInputStream(languageExplorer.getRootGrammarFile()),
                     Arrays.asList(text),
                     true
             );
