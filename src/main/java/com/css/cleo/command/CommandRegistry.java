@@ -1,7 +1,7 @@
 package com.css.cleo.command;
 
+import com.css.cleo.command.exact.OpenBrowserCommand;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -15,7 +15,7 @@ public class CommandRegistry {
     }
 
     protected void registerCommands() {
-
+        nameToCommandMap.put("open_browser", new OpenBrowserCommand());
     }
 
     public Optional<Command> getCommand(@NotNull String name) {
