@@ -3,9 +3,9 @@ package com.css.cleo.voice.language;
 public enum Language {
     ENGLISH(
             "English",
-            "",
-            "",
-            ""
+            "https://www.dropbox.com/s/548icq0qa4zx204/en_hmm.zip?dl=1",
+            "https://www.dropbox.com/s/2rmpl9nte43gvfu/en_dictionary.zip?dl=1",
+            "https://www.dropbox.com/s/b7csc12avsgczp4/en_text.zip?dl=1"
     ),
     RUSSIAN(
             "Russian",
@@ -44,6 +44,6 @@ public enum Language {
     }
 
     public static Language defaultLanguage() {
-        return RUSSIAN;
+        return ENGLISH;
     }
 }
