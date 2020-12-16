@@ -75,11 +75,10 @@ public class VoiceView extends JFrame {
         }
     }
 
-    public void restore(boolean visible) {
+    @Override
+    public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
-            textField.setForeground(Color.BLACK);
-            setSpeechResult(null);
             setFocusable(true);
             setFocusableWindowState(true);
             requestFocus();
@@ -88,6 +87,14 @@ public class VoiceView extends JFrame {
                 onShow.run();
         } else if (onHide != null)
             onHide.run();
+    }
+
+    public void restore(boolean visible) {
+        setVisible(visible);
+        if (visible) {
+            textField.setForeground(Color.BLACK);
+            setSpeechResult(null);
+        }
     }
 
     public void setSpeechResult(@Nullable SpeechResult speechResult) {
