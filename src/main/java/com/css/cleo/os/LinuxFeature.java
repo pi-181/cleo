@@ -3,7 +3,6 @@ package com.css.cleo.os;
 import com.css.cleo.util.FileUtil;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -58,21 +57,30 @@ public class LinuxFeature implements OsFeature {
     }
 
     @Override
-    public void muteVolume(boolean mute) {
-        unsupported();
-        throw new UnsupportedOperationException();
+    public void reboot() {
+        try {
+            Runtime.getRuntime().exec("reboot");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
     }
 
     @Override
-    public void setVolume(int volume) {
-        unsupported();
-        throw new UnsupportedOperationException();
+    public void shutdown() {
+        try {
+            Runtime.getRuntime().exec("shutdown");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
     }
 
     @Override
-    public int getMasterVolume() {
-        unsupported();
-        throw new UnsupportedOperationException();
+    public void hibernate() {
+        try {
+            Runtime.getRuntime().exec("systemctl hibernate");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
     }
 
     private boolean isExecutable(File file) {
@@ -87,11 +95,6 @@ public class LinuxFeature implements OsFeature {
         } catch (IOException e) {
             return false;
         }
-    }
-
-    private void unsupported() {
-        JOptionPane.showMessageDialog(null, "This feature is not supported on Linux",
-                "Unsupported", JOptionPane.ERROR_MESSAGE);
     }
 
 }

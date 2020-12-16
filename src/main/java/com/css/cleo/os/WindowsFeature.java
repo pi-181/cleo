@@ -5,7 +5,6 @@ import mslinks.ShellLink;
 import mslinks.ShellLinkException;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -60,22 +59,30 @@ public class WindowsFeature implements OsFeature {
     }
 
     @Override
-    public void muteVolume(boolean mute) {
+    public void reboot() {
         try {
-            Runtime.getRuntime().exec("cmd mutesysvolume " + (mute ? 1 : 0));
+            Runtime.getRuntime().exec("shutdown /r");
         } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            OsFeature.error(e.getMessage());
         }
     }
 
     @Override
-    public void setVolume(int volume) {
-
+    public void shutdown() {
+        try {
+            Runtime.getRuntime().exec("shutdown /s");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
     }
 
     @Override
-    public int getMasterVolume() {
-        return 0;
+    public void hibernate() {
+        try {
+            Runtime.getRuntime().exec("shutdown /h");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
     }
 
     private boolean isExecutable(File file) {
