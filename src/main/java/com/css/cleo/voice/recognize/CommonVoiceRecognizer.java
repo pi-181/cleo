@@ -2,7 +2,9 @@ package com.css.cleo.voice.recognize;
 
 import edu.cmu.sphinx.api.AbstractSpeechRecognizer;
 import edu.cmu.sphinx.api.SpeechResult;
+import edu.cmu.sphinx.recognizer.Recognizer;
 
+import java.lang.reflect.Field;
 import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.function.BiConsumer;
@@ -19,11 +21,15 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
     protected final Condition enableCondition = lock.newCondition();
     protected final Condition doneCondition = lock.newCondition();
     protected final T speechRecognizer;
-    protected BiConsumer<VoiceRecognizer, SpeechResult> resultCallback;
+    private final Recognizer recognizerInternal;
 
+    protected BiConsumer<VoiceRecognizer, SpeechResult> resultCallback;
     protected boolean initialized = false;
     protected boolean enabled = false;
     protected boolean destroy = false;
+
+    protected boolean handling = false;
+    protected Thread handlingThread;
 
     /**
      * Constructs VoiceRecognizer object.
@@ -35,11 +41,18 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
                                  T speechRecognizer) {
         this.resultCallback = resultCallback;
         this.speechRecognizer = speechRecognizer;
+        try {
+            Field recognizer = AbstractSpeechRecognizer.class.getDeclaredField("recognizer");
+            recognizer.setAccessible(true);
+            this.recognizerInternal = (Recognizer) recognizer.get(speechRecognizer);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         setup();
     }
 
     protected void setup() {
-        final Thread thread = new Thread(() -> {
+        handlingThread = new Thread(() -> {
             final CommonVoiceRecognizer<T> recognizer = CommonVoiceRecognizer.this;
             while (!recognizer.destroy) {
                 lock.lock();
@@ -62,12 +75,21 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
                 lock.unlock();
 
                 SpeechResult result;
-                while (recognizer.enabled && (result = speechRecognizer.getResult()) != null)
-                    resultCallback.accept(this, result);
+                recognizer.handling = true;
+                while (recognizer.enabled && (result = speechRecognizer.getResult()) != null) {
+                    try {
+                        if (!enabled)
+                            break;
+                        resultCallback.accept(this, result);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+                recognizer.handling = false;
             }
         });
-        thread.setDaemon(true);
-        thread.start();
+        handlingThread.setDaemon(true);
+        handlingThread.start();
     }
 
     /**
@@ -90,14 +112,34 @@ public abstract class CommonVoiceRecognizer<T extends AbstractSpeechRecognizer> 
             throw new IllegalStateException("You can't change state of destroyed recognizer.");
 
         this.enabled = enabled;
-        if (enabled)
+
+        if (enabled) {
+            busyWaitUntil(Recognizer.State.DEALLOCATED);
             startRecognition();
-        else
+            busyWaitUntil(Recognizer.State.READY);
+        } else {
+            busyWaitUntil(Recognizer.State.READY);
             stopRecognition();
+            busyWaitUntil(Recognizer.State.DEALLOCATED);
+        }
 
         lock.lock();
         enableCondition.signalAll();
         lock.unlock();
+    }
+
+    private void busyWaitUntil(Recognizer.State until) {
+        Recognizer.State state;
+        while ((state = recognizerInternal.getState()) != until) {
+            if (state == Recognizer.State.ERROR)
+                throw new RuntimeException("Recognizer errored");
+
+            try {
+                Thread.sleep(50);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     /**
