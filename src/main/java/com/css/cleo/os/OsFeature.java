@@ -46,4 +46,10 @@ public interface OsFeature {
             }
         }
     }
+
+    void muteVolume(boolean mute);
+
+    void setVolume(int volume);
+
+    int getMasterVolume();
 }
