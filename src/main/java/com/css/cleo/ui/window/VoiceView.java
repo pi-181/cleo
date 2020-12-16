@@ -90,11 +90,11 @@ public class VoiceView extends JFrame {
     }
 
     public void restore(boolean visible) {
-        setVisible(visible);
         if (visible) {
             textField.setForeground(Color.BLACK);
             setSpeechResult(null);
         }
+        setVisible(visible);
     }
 
     public void setSpeechResult(@Nullable SpeechResult speechResult) {
