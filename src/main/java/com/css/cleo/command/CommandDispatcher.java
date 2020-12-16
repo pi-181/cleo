@@ -26,7 +26,7 @@ public class CommandDispatcher {
                 .map(Optional::get)
                 .collect(Collectors.toList());
 
-        if (commands.isEmpty() || commands.size() > 1)
+        if (commands.size() != 1)
             return false;
 
         commands.get(0).execute(osFeature, result);
