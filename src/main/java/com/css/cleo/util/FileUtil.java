@@ -74,7 +74,7 @@ public final class FileUtil {
     }
 
     public static void checkDir(@NotNull final String location, @NotNull final String dir) {
-        File file = new File(location + File.separatorChar + dir);
+        File file = new File(location, dir);
         if (!file.isDirectory())
             file.mkdirs();
     }
