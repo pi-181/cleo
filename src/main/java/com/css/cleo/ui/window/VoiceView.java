@@ -67,10 +67,20 @@ public class VoiceView extends JFrame {
         setAlwaysOnTop(true);
     }
 
+    public void setSuccess(boolean success) {
+        if (success) {
+            textField.setForeground(Color.GREEN);
+        } else {
+            textField.setForeground(Color.RED);
+        }
+    }
+
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
+            textField.setForeground(Color.BLACK);
+            setSpeechResult(null);
             setFocusable(true);
             setFocusableWindowState(true);
             requestFocus();
