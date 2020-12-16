@@ -3,6 +3,7 @@ package com.css.cleo.ui.window;
 import com.css.cleo.ui.window.components.GradientJPanel;
 import com.css.cleo.ui.window.components.PlaceholderJTextField;
 import edu.cmu.sphinx.api.SpeechResult;
+import org.jetbrains.annotations.Nullable;
 
 import javax.swing.*;
 import java.awt.*;
@@ -80,7 +81,12 @@ public class VoiceView extends JFrame {
             onHide.run();
     }
 
-    public void setSpeechResult(SpeechResult speechResult) {
+    public void setSpeechResult(@Nullable SpeechResult speechResult) {
+        if (speechResult == null) {
+            textField.setText("");
+            return;
+        }
+
         textField.setText(speechResult.getHypothesis());
     }
 

@@ -72,7 +72,11 @@ public class CleoApplication {
         tray.addMenuItem("Settings", e -> System.out.println("not done yet"));
         tray.addMenuItem("Exit", e -> System.exit(0));
 
-        voiceView.setOnShow(() -> languageManager.getVoiceRecognizer().setEnabled(true));
+        voiceView.setOnShow(() -> {
+                languageManager.getVoiceRecognizer().setEnabled(true);
+                voiceView.setSpeechResult(null);
+        });
+
         voiceView.setOnHide(() -> languageManager.getVoiceRecognizer().setEnabled(false));
     }
 
