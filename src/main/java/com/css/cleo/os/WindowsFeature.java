@@ -58,6 +58,33 @@ public class WindowsFeature implements OsFeature {
         return apps;
     }
 
+    @Override
+    public void reboot() {
+        try {
+            Runtime.getRuntime().exec("shutdown /r");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void shutdown() {
+        try {
+            Runtime.getRuntime().exec("shutdown /s");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void hibernate() {
+        try {
+            Runtime.getRuntime().exec("shutdown /h");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
     private boolean isExecutable(File file) {
         if (!file.canExecute())
             return false;

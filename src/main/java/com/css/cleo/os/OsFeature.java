@@ -11,6 +11,12 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 
 public interface OsFeature {
+
+    static void error(String message) {
+        JOptionPane.showMessageDialog(null, message,
+                "An error occurred", JOptionPane.ERROR_MESSAGE);
+    }
+
     /**
      * Returns executable files that are
      * accessed from command line or terminal.
@@ -46,4 +52,20 @@ public interface OsFeature {
             }
         }
     }
+
+    /**
+     * Reboots operation system if possible.
+     */
+    void reboot();
+
+    /**
+     * Shutdowns operation system if possible.
+     */
+    void shutdown();
+
+    /**
+     * Hibernates operation system if possible.
+     */
+    void hibernate();
+
 }

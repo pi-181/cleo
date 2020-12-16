@@ -56,6 +56,33 @@ public class LinuxFeature implements OsFeature {
         return apps;
     }
 
+    @Override
+    public void reboot() {
+        try {
+            Runtime.getRuntime().exec("reboot");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void shutdown() {
+        try {
+            Runtime.getRuntime().exec("shutdown");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void hibernate() {
+        try {
+            Runtime.getRuntime().exec("systemctl hibernate");
+        } catch (IOException e) {
+            OsFeature.error(e.getMessage());
+        }
+    }
+
     private boolean isExecutable(File file) {
         try {
             final String s = Files.probeContentType(file.toPath());
