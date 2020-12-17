@@ -1,8 +1,8 @@
 package com.css.cleo.os;
 
+import com.css.cleo.util.GuiUtil;
 import org.jetbrains.annotations.NotNull;
 
-import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
@@ -11,11 +11,6 @@ import java.net.URISyntaxException;
 import java.util.Collection;
 
 public interface OsFeature {
-
-    static void error(String message) {
-        JOptionPane.showMessageDialog(null, message,
-                "An error occurred", JOptionPane.ERROR_MESSAGE);
-    }
 
     /**
      * Returns executable files that are
@@ -47,7 +42,7 @@ public interface OsFeature {
             try {
                 Desktop.getDesktop().browse(new URI(url));
             } catch (IOException | URISyntaxException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                GuiUtil.showError(e.getMessage());
                 e.printStackTrace();
             }
         }

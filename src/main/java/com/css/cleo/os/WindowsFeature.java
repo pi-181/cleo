@@ -1,6 +1,7 @@
 package com.css.cleo.os;
 
 import com.css.cleo.util.FileUtil;
+import com.css.cleo.util.GuiUtil;
 import mslinks.ShellLink;
 import mslinks.ShellLinkException;
 import org.jetbrains.annotations.NotNull;
@@ -63,7 +64,7 @@ public class WindowsFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("shutdown /r");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 
@@ -72,7 +73,7 @@ public class WindowsFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("shutdown /s");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 
@@ -81,7 +82,7 @@ public class WindowsFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("shutdown /h");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 

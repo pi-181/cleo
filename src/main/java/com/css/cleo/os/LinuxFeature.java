@@ -1,6 +1,7 @@
 package com.css.cleo.os;
 
 import com.css.cleo.util.FileUtil;
+import com.css.cleo.util.GuiUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
@@ -61,7 +62,7 @@ public class LinuxFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("reboot");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 
@@ -70,7 +71,7 @@ public class LinuxFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("shutdown");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 
@@ -79,7 +80,7 @@ public class LinuxFeature implements OsFeature {
         try {
             Runtime.getRuntime().exec("systemctl hibernate");
         } catch (IOException e) {
-            OsFeature.error(e.getMessage());
+            GuiUtil.showError(e.getMessage());
         }
     }
 

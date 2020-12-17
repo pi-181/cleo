@@ -15,3 +15,10 @@ public <command> = <open_browser> | <volume_increase>  | <volume_decrease> | <vo
 <volume_disable> = DISABLE SOUND;
 
 <open_browser> = OPEN BROWSER;
+<open_notepad> = OPEN NOTEPAD;
+<open_gmail> = OPEN GMAIL | SHOW GMAIL;
+<show_time> = SHOW TIME;
+
+<close_program> = CLOSE PROGRAM;
+<close> = CLOSE;
+

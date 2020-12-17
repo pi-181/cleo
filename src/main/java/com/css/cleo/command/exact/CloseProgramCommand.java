@@ -5,10 +5,10 @@ import com.css.cleo.os.OsFeature;
 import com.css.cleo.util.GuiUtil;
 import edu.cmu.sphinx.api.SpeechResult;
 
-public class ShutdownCommand implements Command {
+public class CloseProgramCommand implements Command {
     @Override
     public void execute(OsFeature osFeature, SpeechResult result) {
-        if (GuiUtil.confirm("Are u sure about stop OS?"))
-            osFeature.shutdown();
+        if (GuiUtil.confirm("Are you sure close Cleo?"))
+            System.exit(0);
     }
 }

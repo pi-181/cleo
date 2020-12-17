@@ -5,6 +5,7 @@ import com.css.cleo.os.CommonFeatureFactory;
 import com.css.cleo.os.FeatureFactory;
 import com.css.cleo.ui.CleoTrayIcon;
 import com.css.cleo.ui.window.VoiceView;
+import com.css.cleo.util.GuiUtil;
 import com.css.cleo.util.Keyboard;
 import com.css.cleo.voice.language.LanguageManager;
 import com.css.cleo.voice.recognize.VoiceRecognizer;
@@ -12,7 +13,6 @@ import com.github.kwhat.jnativehook.keyboard.NativeKeyEvent;
 import edu.cmu.sphinx.api.Configuration;
 import edu.cmu.sphinx.api.SpeechResult;
 
-import javax.swing.*;
 import java.io.File;
 import java.util.function.Consumer;
 
@@ -58,8 +58,7 @@ public class CleoApplication {
     }
 
     public void onVoiceException(Exception e) {
-        JOptionPane.showMessageDialog(null,
-                "Can't detect microphone device!", "No input device", JOptionPane.ERROR_MESSAGE);
+        GuiUtil.showError("Can't detect microphone device!");
         System.exit(1);
         throw new Error("No microphone detected");
     }
