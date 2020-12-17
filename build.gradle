@@ -6,7 +6,7 @@ plugins {
     id 'application'
 }
 // Name of the main class of the project
-mainClassName = 'com.css.cleo.Main'
+application.mainClassName = 'com.css.cleo.Main'
 // group announcement and project version
 group 'com.css'
 version '1.0-SNAPSHOT'
@@ -36,4 +36,13 @@ compileJava {
     targetCompatibility = JavaVersion.VERSION_15
     options.encoding = "UTF-8"
     options.encoding = "UTF-8"
+}
+
+jar {
+    manifest {
+        attributes('Main-Class': application.mainClassName)
+    }
+    from {
+        configurations.compileClasspath.filter{ it.exists() }.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
