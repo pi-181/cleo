@@ -50,7 +50,7 @@ public class LanguageManager {
     public void setLanguage(Language language) {
         this.languageConfiguration.setLanguage(language);
 
-        final String outPrefix = "file:/";
+        final String outPrefix = "file:";
         defaultConfig.setAcousticModelPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
         defaultConfig.setDictionaryPath(outPrefix + languageExplorer.getDictionary().getAbsolutePath());
         defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammarsDir().getAbsolutePath());
