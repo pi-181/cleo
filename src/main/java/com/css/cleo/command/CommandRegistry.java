@@ -23,7 +23,7 @@ public class CommandRegistry {
         nameToCommandMap.put("open_gmail", new OpenGmailCommand());
         nameToCommandMap.put("show_time", new ShowTimeCommand());
         nameToCommandMap.put("close_program", new CloseProgramCommand());
-        nameToCommandMap.put("close", new CloseCommand());
+        nameToCommandMap.put("close", new CloseOverlayCommand());
     }
 
     public Optional<Command> getCommand(@NotNull String name) {

@@ -21,5 +21,5 @@ public <command> = <open_browser> | <volume_increase>  | <volume_decrease> | <vo
 <show_time> = SHOW TIME;
 
 <close_program> = CLOSE PROGRAM;
-<close> = CLOSE;
+<close> = CLOSE OVERLAY;
 
