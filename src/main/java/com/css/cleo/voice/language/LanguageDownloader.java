@@ -20,38 +20,38 @@ public class LanguageDownloader {
                                  Consumer<Double> progressConsumer,
                                  Consumer<Exception> exceptionConsumer,
                                  Runnable onDone) {
-        File temp;
         try {
-            temp = Files.createTempDirectory("cleo-downloader").toFile();
-        } catch (IOException e) {
-            exceptionConsumer.accept(e);
-            return;
-        }
+            File temp = Files.createTempDirectory("cleo-downloader").toFile();
 
-        System.out.println(temp.getAbsolutePath());
+            var dictionaryZip = new File(temp, "dictionary.zip");
+            File dictionary = languageExplorer.getDictionary();
+            if (!dictionary.exists()) {
+                currentState.accept("Downloading dictionary...");
+                setup(language.getDictionaryLink(), dictionaryZip, dictionary.getParentFile(), progressConsumer);
+            }
 
-        var dictionaryZip = new File(temp, "dictionary.zip");
-        var grammarZip = new File(temp, "grammar.zip");
-        var acousticModelZip = new File(temp, "acousticModel.zip");
+            var grammarZip = new File(temp, "grammar.zip");
+            File grammarsDir = languageExplorer.getGrammarsDir();
+            if (!grammarsDir.exists()) {
+                currentState.accept("Downloading grammar model...");
+                setup(language.getGrammarLink(), grammarZip, grammarsDir, progressConsumer);
+            }
 
-        currentState.accept("Downloading dictionary...");
-        FileDownloader.downloadFile(language.getDictionaryLink(), dictionaryZip, progressConsumer, exceptionConsumer, out1 -> {
-            currentState.accept("Downloading grammar...");
-            FileDownloader.downloadFile(language.getGrammarLink(), grammarZip, progressConsumer, exceptionConsumer, out2 -> {
+            var acousticModelZip = new File(temp, "acousticModel.zip");
+            File acousticModelDir = languageExplorer.getAcousticModelDir();
+            if (!acousticModelDir.exists()) {
                 currentState.accept("Downloading acoustic model...");
-                FileDownloader.downloadFile(language.getAcousticModelLink(), acousticModelZip, progressConsumer, exceptionConsumer, out3 -> {
-                    currentState.accept("Installing...");
-                    install(dictionaryZip, grammarZip, acousticModelZip, onDone);
-                });
-            });
-        });
+                setup(language.getAcousticModelLink(), acousticModelZip, acousticModelDir, progressConsumer);
+            }
+            onDone.run();
+        } catch (Exception e) {
+            exceptionConsumer.accept(e);
+        }
     }
 
-    private void install(File dictionaryZip, File grammarZip, File accentModelZip, Runnable onDone) {
-        FileUtil.unzip(dictionaryZip, languageExplorer.getDictionary().getParentFile());
-        FileUtil.unzip(grammarZip, languageExplorer.getGrammarsDir());
-        FileUtil.unzip(accentModelZip, languageExplorer.getAcousticModelDir());
-        onDone.run();
+    private void setup(String url, File zipLoc, File unzipDir, Consumer<Double> progressConsumer) {
+        new FileDownloader(url, zipLoc, progressConsumer).run();
+        FileUtil.unzip(zipLoc, unzipDir);
     }
 
 }

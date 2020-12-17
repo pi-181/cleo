@@ -14,6 +14,10 @@ public class FileDownloader implements Runnable {
     private final Consumer<File> onDone;
     public boolean stop = false;
 
+    public FileDownloader(String link, File out, Consumer<Double> progressConsumer) {
+        this(link, out, progressConsumer, Throwable::printStackTrace, e -> {});
+    }
+
     public FileDownloader(String link,
                           File outFile,
                           Consumer<Double> progressConsumer,

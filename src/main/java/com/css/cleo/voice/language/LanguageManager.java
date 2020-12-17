@@ -54,7 +54,9 @@ public class LanguageManager {
         defaultConfig.setAcousticModelPath(outPrefix + languageExplorer.getAcousticModelDir().getAbsolutePath());
         defaultConfig.setDictionaryPath(outPrefix + languageExplorer.getDictionary().getAbsolutePath());
         defaultConfig.setGrammarPath(outPrefix + languageExplorer.getGrammarsDir().getAbsolutePath());
+    }
 
+    private void onLangReady() {
         allRules = JSGFGrammarParser.getAllGrammarRules(languageExplorer.getRootGrammarFile(), true);
     }
 
@@ -98,6 +100,7 @@ public class LanguageManager {
                        Consumer<Exception> voiceExceptionConsumer,
                        Runnable onDone) {
         Runnable init = () -> {
+            onLangReady();
             try {
                 LanguageManager.this.voiceRecognizer = new LiveVoiceRecognizer(defaultConfig, resultCallback);
             } catch (IOException | IllegalArgumentException e) {
@@ -108,10 +111,7 @@ public class LanguageManager {
         };
 
         if (!languageExplorer.isReady())
-            languageDownloader.downloadLanguage(getLanguage(), currentState, progressConsumer, exceptionConsumer, () -> {
-                init.run();
-                onDone.run();
-            });
+            languageDownloader.downloadLanguage(getLanguage(), currentState, progressConsumer, exceptionConsumer, init);
         else init.run();
     }
 
