@@ -3,7 +3,8 @@
 grammar text;
 
 public <command> = <open_browser> | <volume_increase>  | <volume_decrease> | <volume_disable> |
-                   <power_hibernate> | <power_restart> | <power_shutdown>
+                   <power_hibernate> | <power_restart> | <power_shutdown> | <open_notepad> | <open_gmail> |
+				   <show_time> | <close_program> | <close>
                     ;
 
 <power_shutdown> = SHUTDOWN;
