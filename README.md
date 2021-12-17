@@ -1,10 +1,10 @@
 # cleo
-Operation system voice assistant 
-Simple learning project 
+Operation system voice assistant <br>
+Simple learning project <br>
 
-can execute commands:
-reboot
-shutdown
-show time
-open gmail
-open browser
+can execute commands:<br>
+reboot<br>
+shutdown<br>
+show time<br>
+open gmail<br>
+open browser<br>
